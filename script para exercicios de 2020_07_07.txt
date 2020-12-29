@@ -1,0 +1,166 @@
+﻿create database BD_Empresa;
+use BD_Empresa;
+
+create table Tb_Funcao
+(cod_funcao int not null auto_increment primary key,
+nm_funcao varchar(35) not null,
+st_ativo char(1) not null);
+
+create table Tb_Departamento
+(cod_departamento int not null auto_increment primary key,
+nm_departamento varchar(35) not null,
+st_ativo char(1) not null);
+
+create table Tb_Produtos
+(cod_produto int not null auto_increment primary key,
+nm_produto varchar(40) not null,
+st_ativo char(1));
+
+create table Tb_cidades
+(id_cidade int not null auto_increment primary key,
+nm_cidade varchar(50) not null,
+st_ativo char(1));
+
+create table Tb_Funcionarios 
+(id_funcionario int not null auto_increment primary key,
+ nm_funcionario varchar(45) not null,
+ id_departamento int not null,
+ id_funcao int not null, 
+ vl_salario decimal(10,2) not null,
+ dt_admissao date not null,
+ dt_desligamento date null,
+ st_ativo char(1) not null,
+ CONSTRAINT Ligacao_Funcionario_Departamento
+ FOREIGN KEY (id_departamento)
+ REFERENCES Tb_Departamento (cod_departamento),
+ CONSTRAINT Ligacao_Funcionario_Funcao
+ FOREIGN KEY (id_funcao)
+ REFERENCES Tb_Funcao (cod_funcao));
+
+
+
+ CREATE TABLE Tb_Vendas (
+ID int auto_increment Primary Key,
+cod_func int not null,
+Quantidade Int not null,
+cod_produto int not null,
+id_cidade int not null,
+dt_venda date not null,
+CONSTRAINT Ligacao_Vendas_Funcionario
+ FOREIGN KEY (cod_func)
+ REFERENCES Tb_Funcionarios (id_funcionario),
+CONSTRAINT Ligacao_Vendas_Produto
+ FOREIGN KEY (cod_produto)
+ REFERENCES Tb_Produtos (cod_produto),
+ CONSTRAINT Ligacao_Vendas_Cidade
+ FOREIGN KEY (id_cidade)
+ REFERENCES Tb_cidades (id_cidade));
+ 
+INSERT INTO Tb_Funcao (nm_funcao, st_ativo)
+VALUES
+('Vendedor', 'S'),
+('Gerente', 'S'),
+('Supervidor', 'S'),
+('Auxiliar Administrativo', 'S'),
+('Auxiliar de RH', 'S'),
+('Advogado', 'S'),
+('Auxiliar de Logística', 'S'),
+('Auxiliar de Marketing', 'S'),
+('Vice Gerente', 'S'),
+('Secretária', 'S'),
+('Auxiliar de Gerência', 'S');
+
+INSERT INTO Tb_Departamento (nm_departamento, st_ativo)
+VALUES
+('Vendas', 'S'),
+('Administrativo', 'S'),
+('Recursos Humanos', 'S'),
+('Jurídico', 'S'),
+('Logística', 'S'),
+('Marketing', 'S'),
+('Gerência', 'S');
+
+INSERT INTO Tb_funcionarios (nm_funcionario, id_departamento, id_funcao, vl_salario, dt_admissao, st_ativo)
+VALUES
+('Jorge',1,1,4000.00,'2012-01-03','S'),
+('Tatiana',1,1,3850.00,'2012-01-13','S'),
+('Ana',1,1,3850.00,'2012-01-26','S'),
+('Rita',1,2,5500.00,'2014-07-01','S'),
+('Marcos',1,1,3638.00,'2015-09-18','S'),
+('Carla',1,1,3200.00,'2016-11-01','S'),
+('Roberto',1,3,3478.00,'2015-12-07','S'),
+('Antonio',2,4,2000.00,'2011-11-14','S'),
+('João Carlos',2,2,4760.00,'2011-08-01','S'),
+('Fernanda',2,4,2000.00,'2012-01-03','S'),
+('João Pedro',3,2,5500.00,'2011-08-01','S'),
+('Maria Rita',3,5,2100.00,'2011-11-14','S'),
+('Regina Célia',3,5,1970.00,'2014-01-05','S'),
+('Vitor André',3,3,3169.00,'2014-01-05','S'),
+('Agnaldo',4,6,4800.00,'2012-01-03','S'),
+('Maria Célia',4,2,5670.00,'2012-01-03','S'),
+('Ildelina',4,6,4562.00,'2013-09-01','S'),
+('Odair Antonio',5,7,2000.00,'2011-11-01','S'),
+('Fernanda Lima',5,7,2000.00,'2012-02-02','S'),
+('Vitor Benites',5,2,5000.00,'2011-11-01','S'),
+('Ailton Crespim',5,7,1978.00,'2015-07-17','S'),
+('Robson Cruz',6,8,2100.00,'2012-01-03','S'),
+('Sebastiana Valério',6,8,2179.00,'2015-09-19','S'),
+('Fernanda Vanolli',6,2,4400.00,'2012-01-03','S'),
+('Rafael Augusto',7,2,6872.00,'2011-08-01','S'),
+('Manoela Huesca',7,9,5994.00,'2011-08-01','S'),
+('Fernanda Miriando',7,10,2150.00,'2011-10-01','S'),
+('Rafaela Kikuti',7,11,1650.00,'2012-01-06','S');
+
+INSERT INTO Tb_funcionarios (nm_funcionario, id_departamento, id_funcao, vl_salario, dt_admissao, dt_desligamento, st_ativo)
+VALUES
+('João Pedro',6,8,2000.00,'2014-07-04','2014-12-01','N'),
+('Ricardo Araujo',5,7,2160.00,'2015-01-06','2015-06-30','N'),
+('Manoel Lima Filho',3,3,3000.00,'2013-07-01','2013-12-07','N'),
+('Manoela Alcantara',5,7,2000.00,'2016-02-03','2016-08-30','N'),
+('Bruno Pedroni',2,4,2100.00,'2011-06-02','2012-03-04','N'),
+('Bruna Ricochetti',2,4,2064.00,'2016-07-02','2017-08-25','N'),
+('Ailton Praxedes',3,5,2067.00,'2012-08-02','2014-12-04','N');
+
+INSERT INTO Tb_produtos (nm_produto, st_ativo)
+VALUES 
+('Microfone','S'),
+('Caixa de som','S'),
+('Datashow','S'),
+('Tela de projeção','S'),
+('WebCam','N'),
+('Impressora Lajer','S'),
+('Impressora Jato de Tinta','S');
+
+INSERT INTO Tb_cidades (nm_cidade, st_ativo)
+VALUES 
+('São Paulo','S'),
+('Rio de Janeiro','S'),
+('Recife','S'),
+('Porto Alegre', 'S'),
+('Manaus','S'),
+('Rio Branco','N'),
+('João Pessoa','N');
+
+
+INSERT INTO Tb_Vendas (cod_func, Quantidade, cod_produto, id_cidade, dt_venda)
+  VALUES
+(1,1400,1,1,'2016-12-01'),
+(2,1220,2,1,'2017-08-17'),
+(3,1700,2,2,'2017-03-02'),
+(4,2120,1,3,'2019-08-31'),
+(5,980,1,1,'2019-01-04'),
+(6,1120,1,3,'2018-09-23'),
+(7,3145,1,1,'2017-10-13'),
+(4,1000,1,1,'2018-05-23'),
+(7,156,3,3,'2016-03-17'),
+(2,56,3,1,'2018-09-07'),
+(4,143,2,4,'2019-12-21'),
+(5,300,1,4,'2017-07-19'),
+(5,53,2,2,'2017-05-04'),
+(7,100,1,1,'2018-07-16'),
+(6,120,3,3,'2018-12-11'),
+(3,184,2,2,'2019-04-24'),
+(17,8,5,2,'2019-06-04'),
+(20,2,5,1,'2019-06-27'),
+(21,3,1,4,'2016-02-06'),
+(26,3,2,3,'2016-10-09');

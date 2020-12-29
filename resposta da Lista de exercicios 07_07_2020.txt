@@ -1,0 +1,26 @@
+1- 
+
+SELECT func.nm_funcionario AS 'FUNCIONÁRIO',
+       c.nm_cidade      AS 'CIDADE DA VENDA',
+       replace(format(sum(V.Quantidade),0),',','.') as 'TOTAL VENDIDO' 
+       FROM  tb_vendas v
+       INNER JOIN tb_funcionarios func ON v.cod_func = func.id_funcionario
+       INNER JOIN tb_cidades c ON v.id_cidade = c.id_cidade 
+	   GROUP BY FUNC.nm_funcionario, c.nm_cidade
+       ORDER BY  func.nm_funcionario, c.nm_cidade  ;
+
+2 - Os tipos de acesso utilizados são: ALL e eq_ref
+      com ligação vendas_funcionario e vendas_cidade
+
+3-
+
+SELECT * from tb_vendas v     
+WHERE  v.dt_venda >= '2008/01/01';
+
+4- 
+SELECT * from tb_vendas v     
+WHERE  v.dt_venda >= '2008/01/01'
+order by V.DT_VENDA;
+
+
+O tipo de acesso utilizado é ALL
